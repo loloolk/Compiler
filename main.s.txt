@@ -1,0 +1,10 @@
+.section .text
+.globl main
+main:
+call _main
+ret
+
+.globl _main
+_main:
+movl $10, %eax
+ret
