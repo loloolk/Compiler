@@ -56,7 +56,7 @@ char* as_f_call(AST_T* ast) {
         var_s[2] = '\0';
 
         if (first_arg && first_arg->type == AST_VARIABLE) {
-            char* as_var_s = as_f_variable(first_arg, 0);
+            char* as_var_s = as_f_variable(first_arg, 8);
             var_s = realloc(var_s, (strlen(as_var_s) + 1) * sizeof(char));
             strcpy(var_s, as_var_s);
             free(as_var_s);

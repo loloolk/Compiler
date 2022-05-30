@@ -11,7 +11,7 @@ ret
 _main:
 pushq %rbp
 movq %rsp, %rbp
-movl 0(%rsp), %eax
+movl 16(%rsp), %eax
 movq %rbp, %rsp
 popq %rbp
 ret
