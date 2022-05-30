@@ -2,7 +2,7 @@
 .globl main
 main:
 subq $32, %rsp
-movl %ecx, 0(%rbp)
+movl %ecx, 16(%rbp)
 call _main
 addq $32, %rsp
 ret
@@ -11,7 +11,7 @@ ret
 _main:
 pushq %rbp
 movq %rsp, %rbp
-movl 16(%rsp), %eax
+movl 16(%rbp), %eax
 movq %rbp, %rsp
 popq %rbp
 ret

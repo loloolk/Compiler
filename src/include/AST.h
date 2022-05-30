@@ -10,6 +10,7 @@ typedef struct AST_STRUCT {
         AST_DEFINITION_TYPE,
         AST_VARIABLE,
         AST_STATEMENT,
+        AST_ACCESS,
         AST_INT,
         AST_NOOP,
     } type;

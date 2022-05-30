@@ -1,4 +1,8 @@
 
+int _main(int a) {
+    return a;
+}
+
 int main(int argc) {
-    return argc;
+    return _main(argc);
 }

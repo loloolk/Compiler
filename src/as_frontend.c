@@ -56,7 +56,7 @@ char* as_f_call(AST_T* ast) {
         var_s[2] = '\0';
 
         if (first_arg && first_arg->type == AST_VARIABLE) {
-            char* as_var_s = as_f_variable(first_arg, 8);
+            char* as_var_s = as_f_variable(first_arg, 16);
             var_s = realloc(var_s, (strlen(as_var_s) + 1) * sizeof(char));
             strcpy(var_s, as_var_s);
             free(as_var_s);
@@ -84,9 +84,9 @@ char* as_f_root(AST_T* ast) {
                                 //"pushq \%rbp\n"
                                 //"movq \%rsp, \%rbp"
                                 "subq $32, \%rsp\n"
-                                "movl \%ecx, 0(\%rbp)\n"
-                                //"movq \%rdx, 16(\%rbp)"
-
+                                
+                                "movl \%ecx, 16(\%rbp)\n"
+                                //"movq \%rdx, 24(\%rbp)\n"
                                 "call _main\n"
 
                                 "addq $32, %rsp\n"
@@ -101,6 +101,11 @@ char* as_f_root(AST_T* ast) {
 
     return value;
 }
+char* as_f_access(AST_T* ast) {
+    char* s = calloc(1, sizeof(char));
+    //AST_T* first_arg = (AST_T*) ast->value->children->size ? ast->value->children->items[0] : (void*) 0;
+    return s;
+}
 
 char* as_f(AST_T* ast) {
     char* value = calloc(1, sizeof(char));
@@ -112,6 +117,7 @@ char* as_f(AST_T* ast) {
         case AST_VARIABLE: next_value = as_f_variable(ast, 0); break;
         case AST_CALL: next_value = as_f_call(ast); break;
         case AST_INT: next_value = as_f_int(ast); break;
+        case AST_ACCESS: next_value = as_f_access(ast); break;
         default: {
             printf("[As_Frontend]:No frontend for AST of type `%d`\n", ast->type); exit(1);
         } break;
