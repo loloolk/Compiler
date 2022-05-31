@@ -81,17 +81,13 @@ char* as_f_root(AST_T* ast) {
     const char* section_text = ".section .text\n"
                                 ".globl main\n"
                                 "main:\n"
-                                //"pushq \%rbp\n"
-                                //"movq \%rsp, \%rbp"
-                                "subq $32, \%rsp\n"
-                                
-                                "movl \%ecx, 16(\%rbp)\n"
-                                //"movq \%rdx, 24(\%rbp)\n"
-                                "call _main\n"
+                                "subq $32, \%rsp\n" // allocate space for local variables (argc, argv)
+                                "movl \%ecx, 16(\%rbp)\n" // argc
+                                "movl \%rdx, 24(\%rbp)\n" // argv
+                                "call _main\n" // call main without the chance of overwriting argc and argv
 
-                                "addq $32, %rsp\n"
-                                //"popq %rbp\n"
-                                "ret\n\n"; //idek at this point. it saves argc and v i think?
+                                "addq $32, %rsp\n" // return stack to normal
+                                "ret\n\n";
     char* value = (char*) calloc((strlen(section_text) + 128), sizeof(char));
     strcpy(value, section_text);
 

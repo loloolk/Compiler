@@ -1,8 +1,3 @@
-
-int _main(int a) {
-    return a;
-}
-
-int main(int argc) {
-    return _main(argc);
+char* main(int argc, char* argv[]) {
+    return argv[1];
 }

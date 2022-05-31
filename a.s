@@ -1,13 +1,17 @@
-# make 0(%ebx) the return address
-
 .section .text
 .globl main
-main:
-call _main
-movl 0(%ebx), %eax
+main: # 0, 0
+    pushl %ecx
+    popl %eax
 ret
 
 .globl _main
 _main:
-movl $0, 0(%ebx)
+    pushq %rbp
+    movq %rsp, %rbp
+
+    movl 12(%rbp), %eax
+
+    movq %rbp, %rsp
+    popq %rbp
 ret
