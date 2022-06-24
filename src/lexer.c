@@ -22,7 +22,7 @@ void lexer_advance(lexer_T* lexer) {
 }
 
 char lexer_peek(lexer_T* lexer, int offset) {
-    return lexer->src[MIN(lexer->i + offset, lexer->src_size)];
+    return lexer->src[MIN(lexer->i + offset, lexer->src_size)]; // =>
 }
 
 void lexer_skip_whitespace(lexer_T* lexer) {
@@ -60,7 +60,6 @@ token_T* lexer_parse_id(lexer_T* lexer) {
 
 token_T* lexer_parse_number(lexer_T* lexer) {
     char* value = calloc(1, sizeof(char));
-
     while (isdigit(lexer->c)) {
         value = realloc(value, (strlen(value) + 2) * sizeof(char));
         strcat(value, (char[]){lexer->c, 0});

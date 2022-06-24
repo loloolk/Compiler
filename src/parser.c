@@ -43,7 +43,7 @@ AST_T* parser_parse_id(parser_T* parser) {
     AST_T* ast = init_ast(AST_VARIABLE);
     ast->name = value;
     
-    if (parser->token->type == TOKEN_COLON) {
+    if (parser->token->type == TOKEN_COLON) { // var definition
         parser_eat(parser, TOKEN_COLON);
 
         while (parser->token->type == TOKEN_ID) {
@@ -87,7 +87,7 @@ AST_T* parser_parse_block(parser_T* parser) {
 
 AST_T* parser_parse_list(parser_T* parser) { //()
     unsigned int is_bracket = parser->token->type == TOKEN_LBRACKET;
-
+    
     parser_eat(parser, is_bracket ? TOKEN_LBRACKET : TOKEN_LPAREN);
     AST_T* ast = init_ast(AST_COMPOUND);
     
@@ -143,7 +143,7 @@ AST_T* parser_parse_expression(parser_T* parser) {
     }
 }
 
-AST_T* parser_parse_compound(parser_T* parser) {
+AST_T* parser_parse_compound(parser_T* parser) { //starting point / default node
     unsigned int should_close = 0;
 
     if (parser->token->type == TOKEN_LBRACE) {
@@ -152,7 +152,7 @@ AST_T* parser_parse_compound(parser_T* parser) {
     }
     AST_T* compound = init_ast(AST_COMPOUND);
 
-    while (parser->token->type != TOKEN_EOF && parser->token->type != TOKEN_RBRACE) {
+    while (parser->token->type != TOKEN_EOF && parser->token->type != TOKEN_RBRACE) { // recursion section
        list_push(compound->children, parser_parse_expression(parser));
        if (parser->token->type == TOKEN_SEMI) {
            parser_eat(parser, TOKEN_SEMI);

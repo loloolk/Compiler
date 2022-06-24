@@ -32,13 +32,15 @@ static char* sh(char* cmd) { //Runs commands
 void ms_compile(char* src) {
     lexer_T* lexer = init_lexer(src);
     parser_T* parser = init_parser(lexer);
-    AST_T* root = parser_parse(parser);
+    AST_T* root = parser_parse(parser);\
+
+    printf(root->type);
 
     char* s = as_f_root(root);
 
-    ms_write_file("main.s", s);
+    ms_write_file("main.c", s);
     //ms_write_file("a.s.txt", s);
-    sh("gcc main.s -o ms.exe");
+    sh("gcc main.c -o ms.exe");
 }
 
 void ms_compile_file(const char* filename) {
